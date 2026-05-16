@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "neoquack"
+version = "0.1.0"
+description = "DuckDB Quack server backed by DuckLake on Neon Postgres and R2/S3-compatible storage."
+readme = "README.md"
+requires-python = ">=3.13,<3.14"
+dependencies = [
+  "duckdb==1.5.2",
+  "fastapi[standard]>=0.115,<1.0",
+  "httpx>=0.28,<1.0",
+  "psycopg[binary]==3.2.9",
+]
+
+[project.scripts]
+neoquack-server = "neoquack_server.main:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.fastapi]
+entrypoint = "main:app"

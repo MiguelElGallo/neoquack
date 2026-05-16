@@ -1,0 +1,1 @@
+"""NeoQuack FastAPI Cloud runtime."""
