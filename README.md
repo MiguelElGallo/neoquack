@@ -2,6 +2,8 @@
 
 Run DuckDB as a remote Quack server on FastAPI Cloud.
 
+[Open Mallard](https://neoquack.fastapicloud.dev/mallard/) to explore local files in your browser and draft SQL with your GitHub Copilot account. The mounted workspace and its sign-in configuration are maintained in the [Mallard repository](https://github.com/MiguelElGallo/mallard-data-explorer).
+
 Use DuckLake for storage:
 
 - Neon Postgres stores the DuckLake catalog.

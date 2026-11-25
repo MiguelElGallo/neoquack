@@ -13,6 +13,7 @@ dependencies = [
   "fastapi[standard]>=0.115,<1.0",
   "httpx>=0.28,<1.0",
   "psycopg[binary]==3.2.9",
+  "mallard-data-explorer @ https://github.com/MiguelElGallo/mallard-data-explorer/archive/c3e878bdf67ad23da61b735f87491215aeb1110b.tar.gz",
 ]
 
 [project.scripts]

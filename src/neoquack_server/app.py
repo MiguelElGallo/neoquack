@@ -10,9 +10,10 @@ from urllib.parse import urlparse
 
 from fastapi import FastAPI, Request, Response
 from starlette.background import BackgroundTask
-from starlette.responses import JSONResponse, StreamingResponse
+from starlette.responses import JSONResponse, RedirectResponse, StreamingResponse
 import httpx
 
+from mallard_cloud.app import create_app as create_mallard
 from neoquack_server import main as runtime
 
 
@@ -145,6 +146,15 @@ async def lifespan(_app: FastAPI) -> AsyncIterator[None]:
 app = FastAPI(lifespan=lifespan)
 
 
+@app.get("/mallard", include_in_schema=False)
+async def mallard_directory() -> RedirectResponse:
+    return RedirectResponse("/mallard/", status_code=307)
+
+
+# Reserve this prefix before the Quack protocol's catch-all proxy.
+app.mount("/mallard", create_mallard(), name="mallard")
+
+
 @app.get("/")
 @app.get("/healthz")
 def healthz() -> dict[str, object]:
@@ -159,10 +169,12 @@ def readyz() -> Response:
 
 @app.api_route(
     "/",
+    operation_id="proxy_quack__put",
     methods=["DELETE", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"],
 )
 @app.api_route(
     "/{path:path}",
+    operation_id="proxy_quack__path__put",
     methods=["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"],
 )
 async def proxy_quack(request: Request, path: str = "") -> Response:
